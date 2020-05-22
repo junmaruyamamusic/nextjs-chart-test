@@ -20,6 +20,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const drawerWidth = 240;
 
@@ -28,56 +36,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+  input: {
+    height: 40
   },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+  button: {
+    height: 40
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -87,7 +55,7 @@ const data = {
   labels: ['エネルギー', 'タンパク質', '脂質', '糖質', '食物繊維', '食塩相当量', 'ビタミンE'],
   datasets: [
     {
-      label: 'カロリーメイト',
+      label: '焼き肉定食',
       backgroundColor: 'rgba(255,183,0,0.2)',
       borderColor: '#ffb700',
       pointBackgroundColor: 'rgba(255,183,0,0.2)',
@@ -97,7 +65,7 @@ const data = {
       data: [200 / 883.3, 4 / 20, 10.95 / 24.5, 20.85 / 127, 1 / 6.6, 0.355 / 2.67, 1.6 / 2.17]
     },
     {
-      label: 'ケロッグ　フルグラ',
+      label: 'からあげ定食',
       backgroundColor: 'rgba(255,99,132,0.2)',
       borderColor: 'rgba(255,99,132,1)',
       pointBackgroundColor: 'rgba(255,99,132,1)',
@@ -123,7 +91,7 @@ export default function Home() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
- 
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -132,80 +100,79 @@ export default function Home() {
     setOpen(false);
   };
 
+//  <Head>
+//    <title>朝ごはん栄養比べ</title>
+//    <link rel="icon" href="/favicon.ico" />
+//  </Head>
+
 
   return (
-    <div className="container">
-      <Head>
-        <title>朝ごはん栄養比べ</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            朝ごはん栄養くらべ
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {['メールボックス(開発中)', 'メール（送れない）'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-      </Drawer>
+    <div className={classes.root}>
       <main>
-        <Grid
-          container
-          spacing={0}
-          align="center"
-          justify="center"
-          direction="column"
-          style={{ backgroundColor: 'teal' }}
-        >
-          <Grid item style={{ backgroundColor: 'white' }}>
-            <h2>開発中</h2>
-          </Grid>
-          <Grid item style={{ backgroundColor: 'white' }}>
-            <div>
-              <Radar data={data} />
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item style={{ backgroundColor: 'white' }}>
-          <h2>開発中</h2>
-        </Grid>
+      <AppBar position="static">
+  <Toolbar>
+    <Typography variant="h6" className={classes.title}>
+      やよい軒最強プロテインメニュー検索
+    </Typography>
+  </Toolbar>
+</AppBar>
+        <Typography paragraph>
+        <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Paper className={classes.paper}>
+        <TextField
+        InputProps={{
+              className: classes.input
+            }}
+        InputLabelProps={{
+              shrink: true
+            }}
+        id="bugetField"
+        label="予算"
+        variant="filled"
+        color="secondary"/>
+        <Button variant="contained" color="primary" className={classes.button} size="large">
+        検索
+        </Button>
+        </Paper>
+      </Grid>
+      <Grid item xs={6}>
+      <Paper className={classes.paper}>
+      <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image="../public/684s.jpg"
+          title="Contemplative Reptile"
+        />
+        <img src="/684s.jpg" alt="Vercel Logo" />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            焼き肉定食
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            タンパク質：　xx g　脂質　yy g 炭水化物 zz g
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions>
+    </Card>
+      </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper className={classes.paper}>
+        <Radar data={data} />
+        </Paper>
+      </Grid>
+    </Grid>
+        </Typography>
       </main>
     </div>
   )
